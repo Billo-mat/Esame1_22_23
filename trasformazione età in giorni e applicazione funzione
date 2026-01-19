@@ -1,0 +1,22 @@
+# 1. Definiamo la costante di conversione
+DAYS_IN_YEAR = 365
+
+# 2. Creiamo una colonna temporanea 'age_days' per il filtro e il calcolo
+df_bears['age_days'] = df_bears['age_years'] * DAYS_IN_YEAR
+
+# 3. Applichiamo il filtro richiesto (almeno 60 giorni)
+# Nota: un orso di 1 anno ha ~365 giorni, quindi quasi tutti gli adulti passeranno il filtro
+bears_filtered = df_bears[df_bears['age_days'] >= 60].copy()
+
+# 4. Applichiamo la funzione dell'Esercizio 3
+# Usiamo la colonna in giorni appena creata
+bears_filtered['corrected_age_days'] = bears_filtered.apply(
+    lambda row: correct_age(row['sex'], row['environment'], row['age_days']), 
+    axis=1
+)
+
+# 5. Se preferisci il risultato finale di nuovo in anni:
+bears_filtered['corrected_age_years'] = bears_filtered['corrected_age_days'] / DAYS_IN_YEAR
+
+# Visualizziamo il risultato
+print(bears_filtered[['age_years', 'sex', 'environment', 'corrected_age_years']].head())
