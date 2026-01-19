@@ -1,0 +1,28 @@
+def correct_age(sex: str, environment: str, age: float) -> float:
+    """
+    Restituisce l'età corretta moltiplicandola per un fattore basato su sesso e ambiente.
+
+    >>> correct_age('M', 'wild', 100)
+    80.0
+    >>> correct_age('F', 'captive', 10)
+    15.0
+    """
+    
+    # Definiamo la tabella di correzione usando un dizionario con tuple come chiavi
+    corrections = {
+        ('M', 'wild'): 0.8,
+        ('M', 'captive'): 1.0,
+        ('F', 'wild'): 1.2,
+        ('F', 'captive'): 1.5
+    }
+    
+    # Recuperiamo il fattore dal dizionario usando i parametri passati
+    # (Usiamo .get() o l'accesso diretto se siamo sicuri dei dati)
+    factor = corrections.get((sex, environment), 1.0)
+    
+    return age * factor
+
+# Per eseguire i test contenuti nella doctest:
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
